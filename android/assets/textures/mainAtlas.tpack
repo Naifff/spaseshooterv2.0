@@ -1,0 +1,123 @@
+mainAtlas.png
+size: 2048,1009
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bomb
+  rotate: false
+  xy: 0, 92
+  size: 738, 141
+  orig: 738, 141
+  offset: 0, 0
+  index: -1
+bulletblyr
+  rotate: false
+  xy: 1065, 206
+  size: 16, 27
+  orig: 16, 27
+  offset: 0, 0
+  index: -1
+bulletgreen
+  rotate: false
+  xy: 0, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+bulletred
+  rotate: false
+  xy: 16, 75
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+bulletyellow
+  rotate: false
+  xy: 994, 82
+  size: 16, 30
+  orig: 16, 30
+  offset: 0, 0
+  index: -1
+enemy6
+  rotate: false
+  xy: 738, 1
+  size: 256, 232
+  orig: 256, 232
+  offset: 0, 0
+  index: -1
+laser1
+  rotate: false
+  xy: 994, 113
+  size: 71, 120
+  orig: 71, 120
+  offset: 0, 0
+  index: -1
+laser2
+  rotate: false
+  xy: 0, 59
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: -1
+myship
+  rotate: false
+  xy: 0, 234
+  size: 2048, 774
+  orig: 2048, 774
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 994, 71
+  size: 11, 10
+  orig: 11, 10
+  offset: 0, 0
+  index: -1
+
+mainAtlas2.png
+size: 1412,902
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemy1
+  rotate: false
+  xy: 900, 457
+  size: 256, 444
+  orig: 256, 444
+  offset: 0, 0
+  index: -1
+enemy2
+  rotate: false
+  xy: 1156, 361
+  size: 256, 265
+  orig: 256, 265
+  offset: 0, 0
+  index: -1
+enemy3
+  rotate: false
+  xy: 900, 113
+  size: 256, 343
+  orig: 256, 343
+  offset: 0, 0
+  index: -1
+enemy4
+  rotate: false
+  xy: 1156, 96
+  size: 256, 264
+  orig: 256, 264
+  offset: 0, 0
+  index: -1
+enemy5
+  rotate: false
+  xy: 1156, 627
+  size: 256, 274
+  orig: 256, 274
+  offset: 0, 0
+  index: -1
+explosion
+  rotate: false
+  xy: 0, 1
+  size: 900, 900
+  orig: 900, 900
+  offset: 0, 0
+  index: -1
