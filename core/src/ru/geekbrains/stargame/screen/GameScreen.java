@@ -11,12 +11,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.stargame.Background;
+import ru.geekbrains.stargame.bullet.Bullet;
 import ru.geekbrains.stargame.bullet.BulletPool;
 import ru.geekbrains.stargame.engine.Base2DScreen;
 import ru.geekbrains.stargame.engine.math.Rect;
 import ru.geekbrains.stargame.engine.math.Rnd;
 import ru.geekbrains.stargame.explosion.Explosion;
 import ru.geekbrains.stargame.explosion.ExplosionPool;
+import ru.geekbrains.stargame.particle.ParticlePool;
 import ru.geekbrains.stargame.ship.EnemyShip;
 import ru.geekbrains.stargame.ship.MainShip;
 import ru.geekbrains.stargame.ship.ShipPool;
@@ -45,6 +47,9 @@ public class GameScreen extends Base2DScreen {
     private Music music;
     public Rect worldBounds;
 
+    private ParticlePool particlePool;
+    private Bullet tempBullet;
+
     public GameScreen(Game game) {
         super(game);
     }
@@ -71,6 +76,8 @@ public class GameScreen extends Base2DScreen {
         }
         this.explosionPool = new ExplosionPool(atlas, soundExplosion);
         shipPool=new ShipPool(atlas,bulletPool);
+        particlePool = new ParticlePool(atlas);
+
     }
 
     @Override
@@ -92,15 +99,29 @@ public class GameScreen extends Base2DScreen {
             star[i].update(delta);
         }
         bulletPool.updateActiveObjects(delta);
+       tempBullet=bulletPool.collision(mainShip);
+       if(tempBullet!=null){
+           System.out.println("bam!");
+//           Explosion explosion = explosionPool.obtain();
+//        explosion.set(0.1f, tempBullet.pos);
+           particlePool.setup(tempBullet.getLeft(), tempBullet.getBottom(), 0, -0.00000001f, 22.1f*delta, 0.005f, 0.00004f, 1, 0.2f, 0, 1, 1, 1f, 0, 0.0f);
+           tempBullet.isDestroyed();
+       }
         explosionPool.updateActiveObjects(delta);
         mainShip.update(delta);
         randomShipSpawn+=delta;
+
         if(randomShipSpawn>8){
            EnemyShip enemyShip= shipPool.obtain();
            enemyShip.set(atlas,bulletPool,worldBounds);
             randomShipSpawn=0f;
         }
         shipPool.updateActiveObjects(delta);
+//        particlePool.setup(mainShip.getLeft ()+mainShip.getHalfWidth()/2, mainShip.getBottom ()+mainShip.getHalfHeight(), 0, -0.2f, 22.1f, 0.005f, 0.00004f, 1, 0.2f, 0, 1, 1, 1f, 0, 0.0f);
+//        particlePool.setup(mainShip.getRight ()-mainShip.getHalfWidth()/2, mainShip.getBottom ()+mainShip.getHalfHeight(), 0, -0.2f, 22.1f, 0.005f, 0.00004f, 1, 0.2f, 0, 1, 1, 1f, 0, 0.0f);
+        particlePool.update(delta);
+        particlePool.freeAllDestroyedActiveObjects();
+
     }
 
     public void draw() {
@@ -110,11 +131,13 @@ public class GameScreen extends Base2DScreen {
         background.draw(batch);
         for (int i = 0; i < star.length; i++) {
             star[i].draw(batch);
-        }
+        }particlePool.render(batch);
         mainShip.draw(batch);
+
         bulletPool.drawActiveObjects(batch);
         explosionPool.drawActiveObjects(batch);
         shipPool.drawActiveObjects(batch);
+
         batch.end();
     }
 
@@ -128,6 +151,8 @@ public class GameScreen extends Base2DScreen {
         }
         mainShip.resize(worldBounds);
         shipPool.setWorldBounds(worldBounds);
+        particlePool.resize(worldBounds);
+
 
     }
 
@@ -158,12 +183,16 @@ public class GameScreen extends Base2DScreen {
     protected void touchDown(Vector2 touch, int pointer) {
         mainShip.touchDown(touch, pointer);
 
-        Explosion explosion = explosionPool.obtain();
-        explosion.set(0.1f, touch);
+//        Explosion explosion = explosionPool.obtain();
+//        explosion.set(0.1f, touch);
     }
 
     @Override
     protected void touchUp(Vector2 touch, int pointer) {
         mainShip.touchUp(touch, pointer);
+    }
+
+    private boolean colision(MainShip ship, Bullet bullet){
+        return ship.isMe(bullet.pos);
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g3d.particles.values.MeshSpawnShapeValue;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.stargame.bullet.BulletPool;
@@ -21,6 +22,7 @@ public class MainShip extends Ship {
 
     private boolean pressedLeft;
     private boolean pressedRight;
+    private Rect hitarea;
 
     private Sound sound;
 
@@ -36,10 +38,12 @@ public class MainShip extends Ship {
         this.bulletRegion = atlas.findRegion("bulletgreen");
         this.bulletHeight = 0.01f;
         this.bulletV.set(0, 0.5f);
+
         this.bulletDamage = 1;
         this.reloadInterval = 0.2f;
         sound = Gdx.audio.newSound(Gdx.files.internal("sounds/tir.wav"));
         frame = 10;
+        this.hitarea=new Rect();
     }
 
     @Override
@@ -86,7 +90,12 @@ public class MainShip extends Ship {
     @Override
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
+
         setBottom(worldBounds.getBottom() + BOTTOM_MARGIN);
+        hitarea.setBottom(getBottom());
+        hitarea.setTop(getTop());
+        hitarea.setLeft(getLeft()-getHalfWidth()/2);
+        hitarea.setRight(getRight()-getHalfWidth()/2);
     }
 
     public void keyDown(int keycode) {
@@ -102,6 +111,12 @@ public class MainShip extends Ship {
                 moveRight();
                 break;
         }
+    }
+
+    @Override
+    public boolean isMe(Vector2 touch) {
+      return   super.isMe(touch);
+//        return touch.x >= hitarea.getLeft() && touch.x <= hitarea.getRight() && touch.y >= hitarea.getBottom() && touch.y <= hitarea.getTop();
     }
 
     public void keyUp(int keycode) {

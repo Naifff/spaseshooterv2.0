@@ -28,6 +28,7 @@ public abstract class Ship extends Sprite{
     protected float reloadInterval; // время перезарядки
     protected float reloadTimer; // таймер для стрельбы
     protected float animationTimer;
+    protected Vector2 tmp=new Vector2();
 
     public Ship(TextureRegion region, int rows, int cols, int frames) {
         super(region, rows, cols, frames);
@@ -41,5 +42,7 @@ public abstract class Ship extends Sprite{
     protected void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, bulletDamage);
+
+
     }
 }
