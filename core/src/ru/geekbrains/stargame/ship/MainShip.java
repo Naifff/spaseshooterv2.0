@@ -41,7 +41,7 @@ public class MainShip extends Ship {
         this.bulletV.set(0, 0.5f);
         this.bulletDamage = 1;
         this.reloadInterval = 0.2f;
-frame=10;
+frame=11;
         hp = 100;
         setDestroyed(false);
     }
@@ -67,13 +67,14 @@ frame=10;
 
         @Override
     public void update(float delta) {
+        super.update(delta);
         pos.mulAdd(v, delta);
         reloadTimer += delta;
         animationTimer += delta;
 //        System.out.println("animationtimer: "+animationTimer);
         if (animationTimer > 0.1f) {
             if ((left.x * v.x + left.y * v.y) > 0) {
-                if (frame > 0) {
+                if (frame > 1) {
                     frame -= 2;
                     if(frame<0){frame+=2;}
                 }

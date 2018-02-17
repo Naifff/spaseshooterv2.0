@@ -65,14 +65,19 @@ public abstract class Ship extends Sprite{
         damageAnimateTimer += delta;
         if (damageAnimateTimer >= DAMAGE_ANIMATE_INTERVAL) {
 //            frame = 0;
-            if(frame%2!=0){frame -=1;if (frame<0)frame=0;}
+            if(frame%2!=0){frame -=1;
+//            if (frame<0)frame=0;
+//                System.out.println("frame= "+frame+"norm");
+            }
         }
     }
 
     public void damage(int damage) {
 //        frame = 1;
         if(frame%2==0){frame +=1;
-        if(frame>21)frame=21;}
+//        if(frame>21)frame=21;
+//            System.out.println("frame= "+frame+"damaged");
+        }
         damageAnimateTimer = 0;
         hp -= damage;
         if (hp < 0) {

@@ -35,6 +35,8 @@ public class EnemyEmmiter {
     private final Vector2 enemySmallV = new Vector2(0f, -0.2f);
     private final Vector2 enemyMiddleV = new Vector2(0f, -0.03f);
     private final Vector2 enemyBigV = new Vector2(0f, -0.005f);
+    private final Vector2 enemyVBigV = new Vector2(0f, 0);
+
 
     private float generateTimer;
     private float generateInterval = 4f;
@@ -45,6 +47,7 @@ public class EnemyEmmiter {
     private final TextureRegion[] enemySmallRegion;
     private final TextureRegion[] enemyMiddleRegion;
     private final TextureRegion[] enemyBigRegion;
+    private final TextureRegion[] enemyVeryBigRegion;
 
     private TextureRegion bulletRegion;
 
@@ -56,6 +59,7 @@ public class EnemyEmmiter {
         enemySmallRegion = Regions.split(atlas.findRegion("enemy1"), 1, 2, 2);
         enemyMiddleRegion = Regions.split(atlas.findRegion("enemy2"), 1, 2, 2);
         enemyBigRegion = Regions.split(atlas.findRegion("enemy3"), 1, 2, 2);
+        enemyVeryBigRegion = Regions.split(atlas.findRegion("enemy4"), 1, 2, 2);
         bulletRegion = atlas.findRegion("bulletred");
     }
 
@@ -107,6 +111,17 @@ public class EnemyEmmiter {
                         ENEMY_BIG_HEIGHT,
                         ENEMY_BIG_HP * stage
                 );
+//                enemy.set(
+//                        enemyVeryBigRegion,
+//                        enemyVBigV,
+//                        bulletRegion,
+//                        ENEMY_BIG_BULLET_HEIGHT*2,
+//                        ENEMY_BIG_BULLET_VY*10,
+//                        ENEMY_BIG_BULLET_DAMAGE * stage*10,
+//                        ENEMY_BIG_RELOAD_INTERVAL,
+//                        ENEMY_BIG_HEIGHT*2,
+//                        ENEMY_BIG_HP * stage
+//                );
             }
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
             enemy.setBottom(worldBounds.getTop());
