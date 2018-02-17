@@ -1,8 +1,11 @@
 package ru.geekbrains.stargame.ship;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.particles.values.MeshSpawnShapeValue;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.stargame.bullet.BulletPool;
@@ -21,39 +24,83 @@ public class MainShip extends Ship {
 
     private boolean pressedLeft;
     private boolean pressedRight;
-    private float animationTimer=0f;
+//    private Rect hitarea;
 
+//    private Sound sound;
 
 
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
 
+    private  float animationTimer=0;
+
+//    private ExplosionPool explosionPool;
+//    private Rect worldBounds;
+
+//    atlas, bulletPool, explosionPool, worldBounds, soundLaser
+
+//    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ) {
+//public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, Sound soundLaser) {
+////    TextureRegion region, int rows, int cols, int frames, BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, Sound shootSound
+//
+//    super(atlas.findRegion("myship"), 3, 8, 22, bulletPool,explosionPool,worldBounds,soundLaser);
+//        setHeightProportion(SHIP_HEIGHT);
+//        this.bulletPool = bulletPool;
+//        this.bulletRegion = atlas.findRegion("bulletgreen");
+//        this.bulletHeight = 0.01f;
+//        this.bulletV.set(0, 0.5f);
+//
+//        this.bulletDamage = 1;
+//        this.reloadInterval = 0.2f;
+//        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/tir.wav"));
+//        frame = 10;
+//        this.hitarea=new Rect();
+//
+//        this.explosionPool=explosionPool;
+//        this.worldBounds=worldBounds;
+//        this.sound=soundLaser;
+//    }
 
     public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, Sound laserSound) {
         super(atlas.findRegion("myship"), 3, 8, 22, bulletPool, explosionPool, worldBounds, laserSound);
         setHeightProportion(SHIP_HEIGHT);
         this.bulletRegion = atlas.findRegion("bulletgreen");
-    }
-
-    public void setToNewGame() {
-        pos.x = worldBounds.pos.x;
         this.bulletHeight = 0.01f;
         this.bulletV.set(0, 0.5f);
         this.bulletDamage = 1;
         this.reloadInterval = 0.2f;
-frame=10;
-        hp = 100;
-        setDestroyed(false);
     }
 
 //    @Override
 //    public void update(float delta) {
-//        super.update(delta);
 //        pos.mulAdd(v, delta);
 //        reloadTimer += delta;
+//        animationTimer += delta;
+////        System.out.println("animationtimer: "+animationTimer);
+//        if (animationTimer > 0.1f) {
+//            if ((left.x * v.x + left.y * v.y) > 0) {
+//                if (frame > 0) {
+//                    frame -= 2;
+//                }
+//            } else if ((left.x * v.x + left.y * v.y) < 0) {
+//                if (frame < 20) {
+//                    frame += 2;
+//                }
+//            } else {
+//                if (frame < 10) {
+//                    frame += 2;
+//                }
+//                if (frame > 10) {
+//                    frame -= 2;
+//                }
+//            }
+//            animationTimer = 0f;
+//        }
+//
 //        if (reloadTimer >= reloadInterval) {
 //            reloadTimer = 0f;
 //            shoot();
+//            sound.play(0.01f);
 //        }
 //        if (getRight() > worldBounds.getRight()) {
 //            setRight(worldBounds.getRight());
@@ -65,40 +112,14 @@ frame=10;
 //        }
 //    }
 
-        @Override
+    @Override
     public void update(float delta) {
+        super.update(delta);
         pos.mulAdd(v, delta);
         reloadTimer += delta;
-        animationTimer += delta;
-//        System.out.println("animationtimer: "+animationTimer);
-        if (animationTimer > 0.1f) {
-            if ((left.x * v.x + left.y * v.y) > 0) {
-                if (frame > 0) {
-                    frame -= 2;
-                    if(frame<0){frame+=2;}
-                }
-            } else if ((left.x * v.x + left.y * v.y) < 0) {
-                if (frame < 20) {
-                    frame += 2;
-                    if(frame>21){frame+=2;}
-                }
-            } else {
-                if (frame < 10) {
-                    frame += 2;
-                    if(frame>21){frame-=2;}
-                }
-                if (frame > 10) {
-                    frame -= 2;
-                    if(frame<0){frame-=2;}
-                }
-            }
-            animationTimer = 0f;
-        }
-
         if (reloadTimer >= reloadInterval) {
             reloadTimer = 0f;
             shoot();
-//            sound.play(0.01f);
         }
         if (getRight() > worldBounds.getRight()) {
             setRight(worldBounds.getRight());
@@ -109,6 +130,17 @@ frame=10;
             stop();
         }
     }
+
+//    @Override
+//    public void resize(Rect worldBounds) {
+//        super.resize(worldBounds);
+//
+//        setBottom(worldBounds.getBottom() + BOTTOM_MARGIN);
+//        hitarea.setBottom(getBottom());
+//        hitarea.setTop(getTop());
+//        hitarea.setLeft(getLeft()-getHalfWidth()/2);
+//        hitarea.setRight(getRight()-getHalfWidth()/2);
+//    }
 
     @Override
     public void resize(Rect worldBounds) {
@@ -129,6 +161,12 @@ frame=10;
                 moveRight();
                 break;
         }
+    }
+
+    @Override
+    public boolean isMe(Vector2 touch) {
+      return   super.isMe(touch);
+//        return touch.x >= hitarea.getLeft() && touch.x <= hitarea.getRight() && touch.y >= hitarea.getBottom() && touch.y <= hitarea.getTop();
     }
 
     public void keyUp(int keycode) {
@@ -174,21 +212,14 @@ frame=10;
     public void touchUp(Vector2 touch, int pointer) {
         if (pointer == leftPointer) {
             leftPointer = INVALID_POINTER;
-            if (rightPointer != INVALID_POINTER) moveRight(); else stop();
+            if (rightPointer != INVALID_POINTER) moveRight();
+            else stop();
         } else if (pointer == rightPointer) {
             rightPointer = INVALID_POINTER;
-            if (leftPointer != INVALID_POINTER) moveLeft(); else stop();
+            if (leftPointer != INVALID_POINTER) moveLeft();
+            else stop();
         }
     }
-
-    public boolean isBulletCollision(Rect bullet) {
-        return !(bullet.getRight() < getLeft()
-                || bullet.getLeft() > getRight()
-                || bullet.getBottom() > pos.y
-                || bullet.getTop() < getBottom()
-        );
-    }
-
 
     private void moveRight() {
         v.set(v0);
@@ -200,7 +231,8 @@ frame=10;
     private void moveLeft() {
         v.set(v0).rotate(180);
         if (frame > 10) {
-            frame -= 4;}
+            frame -= 4;
+        }
     }
 
     private void stop() {

@@ -54,6 +54,11 @@ public abstract class SpritesPool<T extends Sprite> {
         }
     }
 
+    public void freeAllActiveObjects() {
+        freeObjects.addAll(activeObjects);
+        activeObjects.clear();
+    }
+
     public void free(T object) {
         if (!activeObjects.remove(object)) {
             throw new RuntimeException("Попытка удаления несуществующего объекта");
@@ -68,5 +73,9 @@ public abstract class SpritesPool<T extends Sprite> {
 
     protected  void debugLog() {
 
+    }
+
+    public List<T> getActiveObjects() {
+        return activeObjects;
     }
 }

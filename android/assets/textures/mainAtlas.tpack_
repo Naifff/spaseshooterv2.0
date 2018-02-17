@@ -1,137 +1,122 @@
-
 mainAtlas.png
-size: 2048,1015
+size: 2048,1009
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 bomb
   rotate: false
-  xy: 0, 100
+  xy: 0, 92
   size: 738, 141
   orig: 738, 141
   offset: 0, 0
   index: -1
 bulletblyr
   rotate: false
-  xy: 1617, 214
+  xy: 1065, 206
   size: 16, 27
   orig: 16, 27
   offset: 0, 0
   index: -1
 bulletgreen
   rotate: false
-  xy: 1252, 49
+  xy: 0, 42
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 bulletred
   rotate: false
-  xy: 1323, 169
+  xy: 16, 75
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 bulletyellow
   rotate: false
-  xy: 493, 70
+  xy: 994, 82
   size: 16, 30
   orig: 16, 30
   offset: 0, 0
   index: -1
-button_new_game
-  rotate: false
-  xy: 1252, 185
-  size: 365, 56
-  orig: 365, 56
-  offset: 0, 0
-  index: -1
 enemy6
   rotate: false
-  xy: 738, 9
-  size: 514, 232
-  orig: 514, 232
+  xy: 738, 1
+  size: 256, 232
+  orig: 256, 232
   offset: 0, 0
   index: -1
 laser1
   rotate: false
-  xy: 1252, 65
+  xy: 994, 113
   size: 71, 120
   orig: 71, 120
   offset: 0, 0
   index: -1
 laser2
   rotate: false
-  xy: 0, 0
+  xy: 0, 59
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: -1
-message_game_over
-  rotate: false
-  xy: 0, 32
-  size: 493, 68
-  orig: 493, 68
-  offset: 0, 0
-  index: -1
 myship
   rotate: false
-  xy: 0, 241
+  xy: 0, 234
   size: 2048, 774
   orig: 2048, 774
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 16, 22
+  xy: 994, 71
   size: 11, 10
   orig: 11, 10
   offset: 0, 0
   index: -1
 
 mainAtlas2.png
-size: 1928,900
+size: 1412,902
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 enemy1
   rotate: false
-  xy: 900, 456
-  size: 514, 444
-  orig: 514, 444
+  xy: 900, 457
+  size: 256, 444
+  orig: 256, 444
   offset: 0, 0
   index: -1
 enemy2
   rotate: false
-  xy: 1414, 361
-  size: 514, 265
-  orig: 514, 265
+  xy: 1156, 361
+  size: 256, 265
+  orig: 256, 265
   offset: 0, 0
   index: -1
 enemy3
   rotate: false
   xy: 900, 113
-  size: 514, 343
-  orig: 514, 343
+  size: 256, 343
+  orig: 256, 343
   offset: 0, 0
   index: -1
 enemy4
   rotate: false
-  xy: 1414, 97
-  size: 514, 264
-  orig: 514, 264
+  xy: 1156, 96
+  size: 256, 264
+  orig: 256, 264
   offset: 0, 0
   index: -1
 enemy5
   rotate: false
-  xy: 1414, 626
-  size: 514, 274
-  orig: 514, 274
+  xy: 1156, 627
+  size: 256, 274
+  orig: 256, 274
   offset: 0, 0
   index: -1
 explosion
   rotate: false
-  xy: 0, 0
+  xy: 0, 1
   size: 900, 900
   orig: 900, 900
   offset: 0, 0
