@@ -32,11 +32,21 @@ public class EnemyEmmiter {
     private static final float ENEMY_BIG_RELOAD_INTERVAL = 4f;
     private static final int ENEMY_BIG_HP = 20;
 
+    private static final float ENEMY_BOSS_HEIGHT = 0.4f;
+    private static final float ENEMY_BOSS_BULLET_HEIGHT = 0.09f;
+    private static final float ENEMY_BOSS_BULLET_VY = -0.9f;
+    private static final int ENEMY_BOSS_BULLET_DAMAGE = 100;
+    private static final float ENEMY_BOSS_RELOAD_INTERVAL = 4f;
+    private static final int ENEMY_BOSS_HP = 200;
+
     private final Vector2 enemySmallV = new Vector2(0f, -0.2f);
     private final Vector2 enemyMiddleV = new Vector2(0f, -0.03f);
     private final Vector2 enemyBigV = new Vector2(0f, -0.005f);
-    private final Vector2 enemyVBigV = new Vector2(0f, 0);
+    private final Vector2 enemyBossV = new Vector2(0f, 0);
 
+    private int countSmall=10;
+    private int countMedium=5;
+    private int countBig =2;
 
     private float generateTimer;
     private float generateInterval = 4f;
@@ -47,11 +57,12 @@ public class EnemyEmmiter {
     private final TextureRegion[] enemySmallRegion;
     private final TextureRegion[] enemyMiddleRegion;
     private final TextureRegion[] enemyBigRegion;
-    private final TextureRegion[] enemyVeryBigRegion;
+    private final TextureRegion[] enemyBossRegion;
 
     private TextureRegion bulletRegion;
 
     private int stage;
+    private int create=0;
 
     public EnemyEmmiter(EnemyPool enemyPool, Rect worldBounds, TextureAtlas atlas) {
         this.enemyPool = enemyPool;
@@ -59,23 +70,33 @@ public class EnemyEmmiter {
         enemySmallRegion = Regions.split(atlas.findRegion("enemy1"), 1, 2, 2);
         enemyMiddleRegion = Regions.split(atlas.findRegion("enemy2"), 1, 2, 2);
         enemyBigRegion = Regions.split(atlas.findRegion("enemy3"), 1, 2, 2);
-        enemyVeryBigRegion = Regions.split(atlas.findRegion("enemy4"), 1, 2, 2);
+        enemyBossRegion = Regions.split(atlas.findRegion("enemy4"), 1, 2, 2);
         bulletRegion = atlas.findRegion("bulletred");
     }
 
     public void setToNewGame() {
         stage = 1;
+        countSmall=10;
+        countMedium=5;
+        countBig =2;
     }
 
     public void generateEnemy(float delta, int frags) {
-        stage = frags / 3 + 1;
+        if (stage!=frags / 17 + 1){
+            countSmall=10;
+            countMedium=5;
+            countBig =2;
+        }
+        stage = frags / 17 + 1;
         generateTimer += delta;
         if (generateInterval <= generateTimer) {
             generateTimer = 0f;
             EnemyShip enemy = enemyPool.obtain();
-
+create=1;
+for(;;){
             float type = (float) Math.random();
-            if (type<0.7f) {
+            if (type<0.7f&countSmall>0) {
+                countSmall-=1;
                 enemy.set(
                         enemySmallRegion,
                         enemySmallV,
@@ -87,7 +108,9 @@ public class EnemyEmmiter {
                         ENEMY_SMALL_HEIGHT,
                         ENEMY_SMALL_HP * stage
                 );
-            } else if (type < 0.9f) {
+                create=0;
+            } else if (type < 0.9f&countMedium>0) {
+                countMedium-=1;
                 enemy.set(
                         enemyMiddleRegion,
                         enemyMiddleV,
@@ -99,7 +122,9 @@ public class EnemyEmmiter {
                         ENEMY_MIDDLE_HEIGHT,
                         ENEMY_MIDDLE_HP * stage
                 );
-            } else {
+                create=0;
+            } else if(countBig>0){
+                countBig-=1;
                 enemy.set(
                         enemyBigRegion,
                         enemyBigV,
@@ -111,18 +136,24 @@ public class EnemyEmmiter {
                         ENEMY_BIG_HEIGHT,
                         ENEMY_BIG_HP * stage
                 );
-//                enemy.set(
-//                        enemyVeryBigRegion,
-//                        enemyVBigV,
-//                        bulletRegion,
-//                        ENEMY_BIG_BULLET_HEIGHT*2,
-//                        ENEMY_BIG_BULLET_VY*10,
-//                        ENEMY_BIG_BULLET_DAMAGE * stage*10,
-//                        ENEMY_BIG_RELOAD_INTERVAL,
-//                        ENEMY_BIG_HEIGHT*2,
-//                        ENEMY_BIG_HP * stage
-//                );
+create=0;
             }
+            if(countBig==0&countMedium==0&countSmall==0){
+                countSmall-=1;countMedium-=1;countBig-=1;
+                                enemy.set(
+                        enemyBossRegion,
+                        enemyBossV,
+                        bulletRegion,
+                        ENEMY_BOSS_BULLET_HEIGHT,
+                        ENEMY_BOSS_BULLET_VY,
+                        ENEMY_BOSS_BULLET_DAMAGE * stage,
+                        ENEMY_BOSS_RELOAD_INTERVAL,
+                        ENEMY_BOSS_HEIGHT,
+                        ENEMY_BOSS_HP * stage
+                );create=0;
+            }
+if(create==0){break;}
+}
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
             enemy.setBottom(worldBounds.getTop());
         }

@@ -81,6 +81,7 @@ public class GameScreen extends Base2DScreen implements ActionListener {
         music  = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
         music.setLooping(true);
         music.play();
+        music.setVolume(0.3f);
         soundExplosion = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.wav"));
         soundLaser = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
         soundBullet = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
@@ -127,6 +128,7 @@ public class GameScreen extends Base2DScreen implements ActionListener {
         }
         deleteAllDestroyed();
         update(delta);
+        draw();
         draw();
     }
 

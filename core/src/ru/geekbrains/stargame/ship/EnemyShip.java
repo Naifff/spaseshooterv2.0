@@ -11,6 +11,8 @@ import ru.geekbrains.stargame.explosion.ExplosionPool;
 
 public class EnemyShip extends Ship {
 
+//    private boolean boss=false;
+
     private enum State {DESCENT, FIGHT}
 
     private MainShip mainShip;
@@ -61,6 +63,7 @@ public class EnemyShip extends Ship {
             float reloadInterval,
             float height,
             int hp
+
     ) {
         this.regions = regions;
         this.v0.set(v0);
@@ -75,6 +78,7 @@ public class EnemyShip extends Ship {
         state = State.DESCENT;
         reloadTimer = reloadInterval;
         frame=0;
+        if(hp>=200){setBoss(true);}
     }
 
     public boolean isBulletCollision(Rect bullet) {

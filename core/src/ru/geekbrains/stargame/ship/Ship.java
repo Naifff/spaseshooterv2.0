@@ -16,6 +16,18 @@ import ru.geekbrains.stargame.explosion.ExplosionPool;
  */
 
 public abstract class Ship extends Sprite{
+    private Vector2 tmpVector;
+
+    private boolean boss=false;
+
+    public void setBoss(boolean boss) {
+        this.boss = boss;
+    }
+
+    public boolean isBoss() {
+
+        return boss;
+    }
 
     private static final float DAMAGE_ANIMATE_INTERVAL = 0.1f;
     private float damageAnimateTimer = DAMAGE_ANIMATE_INTERVAL;
@@ -103,9 +115,24 @@ public abstract class Ship extends Sprite{
 //    }
 
     protected void shoot() {
+        if (!boss){
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, bulletDamage);
-        shootSound.play();
+        shootSound.play();}
+        else{
+            Bullet bullet = bulletPool.obtain();
+            bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, bulletDamage);
+            shootSound.play();
+            Bullet bullet1 = bulletPool.obtain();
+            tmpVector=bulletV;
+            tmpVector.x+=0.1f;
+            bullet1.set(this, bulletRegion, pos, tmpVector, bulletHeight, worldBounds, bulletDamage);
+            shootSound.play();
+            Bullet bullet2 = bulletPool.obtain();
+            tmpVector.x-=0.2f;
+            bullet2.set(this, bulletRegion, pos, tmpVector, bulletHeight, worldBounds, bulletDamage);
+            shootSound.play();
+        }
     }
 
     public void boom() {
