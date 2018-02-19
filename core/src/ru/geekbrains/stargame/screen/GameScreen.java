@@ -164,6 +164,9 @@ public class GameScreen extends Base2DScreen implements ActionListener {
                     bullet.setDestroyed(true);
                     if (enemy.isDestroyed()) {
                         frags++;
+                        if(enemy.isBoss())
+                        {EnemyShip.isBossAlive=false;
+                        enemyEmmiter.nextLvl();}
                         break;
                     }
                 }

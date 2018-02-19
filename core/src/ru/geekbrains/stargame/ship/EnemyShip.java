@@ -14,6 +14,7 @@ public class EnemyShip extends Ship {
 //    private boolean boss=false;
 
     private enum State {DESCENT, FIGHT}
+    public static boolean isBossAlive=false;
 
     private MainShip mainShip;
     private State state;
@@ -78,7 +79,6 @@ public class EnemyShip extends Ship {
         state = State.DESCENT;
         reloadTimer = reloadInterval;
         frame=0;
-        if(hp>=200){setBoss(true);}
     }
 
     public boolean isBulletCollision(Rect bullet) {

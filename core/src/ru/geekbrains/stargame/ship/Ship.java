@@ -2,6 +2,7 @@ package ru.geekbrains.stargame.ship;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.stargame.bullet.Bullet;
@@ -121,15 +122,17 @@ public abstract class Ship extends Sprite{
         shootSound.play();}
         else{
             Bullet bullet = bulletPool.obtain();
-            bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, bulletDamage);
+            tmpVector=bulletV;
+            tmpVector.x+= MathUtils.random(-0.1f,0);
+            bullet.set(this, bulletRegion, pos, tmpVector, bulletHeight, worldBounds, bulletDamage);
             shootSound.play();
             Bullet bullet1 = bulletPool.obtain();
-            tmpVector=bulletV;
-            tmpVector.x+=0.1f;
+
+            tmpVector.x+= 0.05f;
             bullet1.set(this, bulletRegion, pos, tmpVector, bulletHeight, worldBounds, bulletDamage);
             shootSound.play();
             Bullet bullet2 = bulletPool.obtain();
-            tmpVector.x-=0.2f;
+            tmpVector.x+= 0.05f;
             bullet2.set(this, bulletRegion, pos, tmpVector, bulletHeight, worldBounds, bulletDamage);
             shootSound.play();
         }
